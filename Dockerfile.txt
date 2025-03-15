@@ -1,0 +1,21 @@
+# Використовуємо базовий образ Python
+FROM python:3.9-slim-buster
+
+# Встановлюємо робочу директорію в контейнері
+WORKDIR /app
+
+# Копіюємо файли вимог (якщо є)
+COPY requirements.txt .
+
+# Встановлюємо залежності (якщо є requirements.txt)
+RUN if [ -f requirements.txt ]; then pip install --no-cache-dir -r requirements.txt; fi
+
+# Копіюємо всі файли проекту в контейнер
+COPY . .
+
+# Відкриваємо порти
+EXPOSE 3000
+EXPOSE 5000
+
+# Запускаємо веб-додаток і сокет-сервер
+CMD ["python", "main.py"]
